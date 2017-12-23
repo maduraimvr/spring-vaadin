@@ -20,8 +20,8 @@ import com.vaadin.ui.VerticalLayout;
  * @author Venkatraman
  *
  */
-@SpringUI
 @Theme("valo")
+@SpringUI(path="/spring-vaadin/index")
 public class VaadinUI extends UI{
     
     @Autowired
