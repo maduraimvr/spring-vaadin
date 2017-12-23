@@ -3,6 +3,8 @@
  */
 package com.example.springvaadin;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.annotations.Theme;
@@ -24,6 +26,9 @@ public class VaadinUI extends UI{
     
     @Autowired
     private VaadinService vaadinService;
+    
+    private static final Logger log = LoggerFactory.getLogger(VaadinUI.class);
+
 
     /* (non-Javadoc)
      * @see com.vaadin.ui.UI#init(com.vaadin.server.VaadinRequest)
@@ -31,18 +36,24 @@ public class VaadinUI extends UI{
     @Override
     protected void init(VaadinRequest request) {
 	// TODO Auto-generated method stub
-	TextField nameFeild=new TextField("Enter your Name :");
-	Button submitButton=new Button("Click me!");
+	TextField customerId=new TextField("Enter Id :");
+	TextField firstNameFeild=new TextField("Enter your First Name :");
+	TextField lastNameFeild=new TextField("Enter your last Name :");
+	Button submitButton=new Button("Save");
 	
 	
 	VerticalLayout layout=new VerticalLayout();
-	layout.addComponents(nameFeild,submitButton);
+	layout.addComponents(customerId,firstNameFeild,lastNameFeild,submitButton);
 	layout.setMargin(true);
 	layout.setSpacing(true);
 	setContent(layout);
 	
 	submitButton.addClickListener(listener->{
-	    Notification.show(vaadinService.sayHello(nameFeild.getValue()));
+	    log.info("addClickListener method starts");
+	    Customer customer=new Customer(firstNameFeild.getValue(),lastNameFeild.getValue());
+	    vaadinService.saveCustomer(customer);
+	    Notification.show(vaadinService.sayHello(firstNameFeild.getValue()));
+	    log.info("addClickListener method ends");
 	});
 	
     }
